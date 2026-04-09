@@ -1,12 +1,10 @@
 # impact-of-war-on-india
 Problem Statement
 
-The ongoing geopolitical conflict in the Middle East, particularly involving Iran, has created significant uncertainty in global economic and political systems. As a major developing economy, India maintains strong ties with the region through energy imports, trade, and a large expatriate workforce. Any disruption in this region can directly influence India’s economic stability, inflation, and growth trajectory.
+A growing concern in global geopolitics is the ongoing conflict in the Middle East and its far-reaching implications on economies worldwide. India, being a major importer of crude oil and having strong trade relations with several Middle Eastern countries, is particularly vulnerable to disruptions caused by this conflict. Fluctuations in oil prices, supply chain instability, and changes in diplomatic relations can significantly impact India's economic stability, inflation rates, and energy security.
 
-Recent developments in the conflict have led to rising oil prices, supply chain disruptions, and volatility in global markets. Since India relies heavily on oil imports from the Gulf region, fluctuations in crude oil prices can increase import costs, weaken the rupee, and contribute to inflation. Additionally, the conflict poses risks to Indian workers in the Middle East, potentially affecting remittances and domestic consumption.
+The government and policymakers have observed potential shifts in fuel prices, trade balances, and foreign investments as a result of these tensions. Additionally, sectors such as transportation, manufacturing, and agriculture may experience indirect effects due to rising costs and uncertainties.
 
-The situation also impacts international trade routes, particularly through critical channels like the Strait of Hormuz, causing delays and increased transportation costs. These disruptions can affect multiple sectors in India, including manufacturing, transportation, and agriculture. Furthermore, uncertainty in global markets may influence foreign investments and overall economic confidence.
+You are tasked with analyzing the impact of the Middle East conflict on India's economy to address the following overarching question:
 
-You are tasked with analyzing the impact of the Middle East conflict on India to answer the following overarching question:
-
-“How does the ongoing Middle East conflict, particularly involving Iran, impact India’s economy, trade, energy security, and financial stability, and what strategies can be adopted to mitigate these risks and ensure sustainable growth?”
+“How does the ongoing Middle East conflict influence India’s economic stability, particularly in terms of oil prices, trade dynamics, and overall market performance, and what strategies can be adopted to mitigate these effects?”
