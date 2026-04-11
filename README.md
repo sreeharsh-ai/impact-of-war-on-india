@@ -1,4 +1,3 @@
-# impact-of-war-on-india
 # 🛢️ Impact of Middle East Conflict on India's Economy
 ### A Data Analytics Project | World Bank & EIA Data | Python · SQL · Power BI
 
