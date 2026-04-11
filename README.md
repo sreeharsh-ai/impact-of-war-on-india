@@ -163,7 +163,7 @@ Based on the data analysis, the following strategies are recommended for Indian 
 
 **Sreeharsh**
 B.Tech Computer Science & Engineering (2nd Year)
-VJEC, Kannur University
+Vimal Jyothi engineering college, KTU
 
 - 📜 Google Data Analytics Professional Certificate
 - 📊 Microsoft PL-300 Power BI Certified
