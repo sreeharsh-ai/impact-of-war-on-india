@@ -21,10 +21,15 @@ India imports over **85% of its crude oil**, making it highly sensitive to globa
 
 📁 india-geopolitics-economy/
 │
+
 ├── 📄 data_cleaning.py
+
 ├── 📄 SQL_Analysis_Queries.sql
+
 ├── 📄 india_geopolitics_analysis_master.csv
+
 ├── 📊 power_bi_pbix.zip
+
 └── 📄 README.md
 
 ---
