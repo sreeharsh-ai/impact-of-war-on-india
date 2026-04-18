@@ -1,176 +1,184 @@
 # 🛢️ Impact of Middle East Conflict on India's Economy
-### A Data Analytics Project | World Bank & EIA Data | Python · SQL · Power BI
+
+### A Data Analytics Project | Power BI · Python · SQL
+
+![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)
+![SQL](https://img.shields.io/badge/SQL-SQLite%2FPostgreSQL-orange?logo=postgresql)
+![Power BI](https://img.shields.io/badge/PowerBI-Dashboard-yellow?logo=powerbi)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
 
 ---
 
-## 📌 Problem Statement
+## 📌 Project Overview
 
-A growing concern in global geopolitics is the ongoing conflict in the Middle East and its far-reaching implications on economies worldwide. **India, being a major importer of crude oil** and having strong trade relations with several Middle Eastern countries, is particularly vulnerable to disruptions caused by these conflicts.
+This project analyzes how geopolitical instability in the Middle East — including events such as the Gulf War, Arab Spring, ISIS rise, and recent conflicts — has **influenced and is associated with changes in India's macroeconomic indicators**, particularly **oil prices and inflation**.
 
-Fluctuations in oil prices, supply chain instability, and changes in diplomatic relations can significantly impact India's economic stability, inflation rates, and energy security. Sectors such as transportation, manufacturing, and agriculture experience indirect effects due to rising costs and uncertainties.
-
-> **Overarching Question:** *"How does the ongoing Middle East conflict influence India's economic stability, particularly in terms of oil prices, trade dynamics, and overall market performance — and what strategies can be adopted to mitigate these effects?"*
+India imports over **85% of its crude oil**, making it highly sensitive to global oil price fluctuations. This project combines historical data to understand how oil price shocks relate to inflation trends over time.
 
 ---
 
-## 📁 Repository Structure
+## 🗂️ Repository Structure
 
-```
-📦 india-geopolitics-oil-inflation/
-├── 📄 README.md                              ← You are here
-├── 🐍 data_cleaning.py                       ← Full ETL pipeline (Python)
-├── 🗄️ SQL_Analysis_Queries.sql               ← 7 analytical SQL queries
-├── 📊 india_geopolitics_analysis_master.csv  ← Clean master dataset
-└── 📈 Geopolitics_Impact_Analysis.pbix       ← Power BI Dashboard (4 pages)
-```
-
----
-
-## 📊 Dataset Sources
-
-| Dataset | Source | Description |
-|---|---|---|
-| Inflation, Consumer Prices (Annual %) | [World Bank WDI](https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG) | India CPI inflation 1960–2024 |
-| Europe Brent Spot Price FOB | [U.S. EIA](https://www.eia.gov/dnav/pet/hist/RBRTEd.htm) | Daily Brent crude oil prices (USD/barrel) |
-| Country Metadata | World Bank | Region & Income Group classification |
+📁 india-geopolitics-economy/
+│
+├── 📄 data_cleaning.py
+├── 📄 SQL_Analysis_Queries.sql
+├── 📄 india_geopolitics_analysis_master.csv
+├── 📊 power_bi_pbix.zip
+└── 📄 README.md
 
 ---
 
-## 🔧 Technical Implementation
+## 📦 Dataset
 
-### ETL Pipeline (`data_cleaning.py`)
+The final dataset (`india_geopolitics_analysis_master.csv`) was created through a custom ETL pipeline using Python. It covers the period **1987–2024**.
 
-**Step 1 — Raw Data Loading**
-Both datasets contained 4-5 lines of descriptive metadata headers. Used `skiprows=4` to skip them and load actual tabular data.
+### Dataset Columns
 
-**Step 2 — Oil Data: Daily → Annual Aggregation**
-- Parsed dates with `pd.to_datetime()`
-- Extracted year component
-- Aggregated using `.agg()`: `avg_oil_price` (mean) and `oil_volatility` (standard deviation)
-- **Feature Engineering:** Created `oil_price_shock_pct` using `.pct_change() * 100` — a Conflict Marker that flags years with major geopolitical disruptions
-
-**Step 3 — Inflation Data: Wide → Long Format (Melt)**
-- World Bank data stored years as column headers (Wide format)
-- Used `pd.melt()` to convert to Long format (one row per year)
-- This is the required format for Power BI time-series analysis
-
-**Step 4 — Three-Way Join**
-```
-India Inflation (Long) + Country Metadata + Oil Price (Annual)
-        ↓ join on Country Code     ↓ join on Year
-              india_geopolitics_analysis_master.csv
-```
-
-### Master Dataset Schema
-
-| Column | Type | Description |
-|---|---|---|
-| `year` | Integer | Calendar year (1987–2024) |
-| `country_name` | String | India |
-| `country_code` | String | IND |
-| `Region` | String | South Asia |
-| `IncomeGroup` | String | Lower middle income |
-| `inflation_pct` | Float | Annual CPI inflation (%) |
-| `avg_oil_price` | Float | Average Brent crude (USD/barrel) |
-| `oil_volatility` | Float | Std deviation of daily prices that year |
-| `oil_price_shock_pct` | Float | Year-over-year price change (%) |
+| Column                | Description                            |
+| --------------------- | -------------------------------------- |
+| `year`                | Calendar year                          |
+| `country_name`        | India                                  |
+| `country_code`        | IND                                    |
+| `Region`              | South Asia                             |
+| `IncomeGroup`         | Lower middle income                    |
+| `inflation_pct`       | India CPI inflation (%)                |
+| `avg_oil_price`       | Average Brent crude price (USD/barrel) |
+| `oil_volatility`      | Standard deviation of oil prices       |
+| `oil_price_shock_pct` | Year-over-year % change in oil price   |
 
 ---
 
-## 📈 Key Analytical Findings
+## 🌐 Data Sources
 
-### 1. Conflict Years & India's Inflation Response
+The dataset was built using publicly available data:
 
-| Year | Event | Oil Shock % | India Inflation % |
-|---|---|---|---|
-| 1990 | Gulf War (Iraq invades Kuwait) | +40% | 9.0% |
-| 1991 | Gulf War Peak + India BOP Crisis | — | 13.9% |
-| 2008 | Global Financial Crisis + Oil Spike | +35% | 8.3% |
-| 2022 | Russia-Ukraine + Middle East Tensions | +42% | 6.7% |
-| 2023 | Israel-Hamas War / Red Sea Disruptions | -18% | 5.6% |
+* **World Bank Open Data**
+  Indicator: *Inflation, Consumer Prices (FP.CPI.TOTL.ZG)*
+  Source: https://data.worldbank.org
 
-### 2. Top 5 Most Volatile Oil Years
-*(From SQL Query 2 — oil_volatility ranked)*
+* **U.S. Energy Information Administration (EIA)**
+  Dataset: *Europe Brent Spot Price FOB (Daily)*
+  Source: https://www.eia.gov
 
-High volatility years directly preceded inflation spikes in India, confirming that **price uncertainty** is as damaging as high prices themselves.
-
-### 3. Decade Analysis
-
-| Decade | Avg Inflation | Avg Oil Price | Risk Level |
-|---|---|---|---|
-| 1987–1999 | 9.2% | $19.50 | Very High |
-| 2000–2009 | 5.8% | $52.60 | High |
-| 2010–2019 | 6.1% | $82.30 | Medium |
-| 2020–2024 | 5.8% | $75.20 | Medium-High |
-
-**Insight:** India's economy shows growing resilience — despite higher oil prices in recent decades, inflation is better controlled (structural reforms, monetary policy, diversified energy mix).
+These raw datasets were cleaned, transformed, and merged using Python. 
 
 ---
 
-## 📊 Power BI Dashboard (`Geopolitics_Impact_Analysis.pbix`)
+## ⚙️ ETL Pipeline (`data_cleaning.py`)
 
-### Page 1: The Pulse of the Economy
-- KPI cards: Current Oil Price, India's Inflation, Oil Volatility Index
-- Line chart: India CPI Inflation vs. Average Brent Oil Price (1987–2024)
+The project includes a complete ETL pipeline:
 
-### Page 2: Geopolitical Timeline
-- Dual-axis line chart: Oil Price & India Inflation
-- Conflict annotations for: 1990 (Gulf War), 2003 (Iraq Invasion), 2011 (Arab Spring), 2022 (Ukraine/Middle East tensions)
-
-### Page 3: Risk Heatmap
-- Matrix visual: Decade × Risk Category (Stable / Moderate / High Risk)
-- Colour-coded by oil volatility quartile
-
-### Page 4: Shock Simulator
-- What-If parameter: User selects an oil price increase (e.g. +20%)
-- Predicted impact on India's inflation based on historical regression
+1. Load raw CSV files (skip metadata rows)
+2. Clean and convert data types
+3. Aggregate oil prices from daily → yearly
+4. Calculate oil volatility and price shocks
+5. Transform inflation data (wide → long format)
+6. Merge datasets (inflation + oil + metadata)
+7. Validate data (nulls, stats, missing years)
+8. Export final dataset
 
 ---
 
-## 🛡️ Strategic Recommendations
+## 🔍 SQL Analysis
 
-Based on the data analysis, the following strategies are recommended for Indian policymakers:
+Seven analytical SQL queries were written to extract insights:
 
-1. **Strategic Petroleum Reserves (SPR) Expansion**
-   India's current SPR covers ~9 days of demand. Expanding to 30–45 days (like IEA guidelines) would buffer supply shocks from Middle East disruptions.
+| Query | Description                    |
+| ----- | ------------------------------ |
+| Q1    | Dataset overview               |
+| Q2    | Top volatile oil years         |
+| Q3    | Largest oil price shocks       |
+| Q4    | Decade-wise trends             |
+| Q5    | Geopolitical event analysis    |
+| Q6    | Risk classification            |
+| Q7    | Inflation resilience over time |
 
-2. **Renewable Energy Acceleration**
-   Each percentage point increase in domestic renewable energy production reduces India's oil import dependence and lowers sensitivity to Brent crude price shocks.
+---
 
-3. **Rupee Hedging Mechanisms**
-   Middle East oil is priced in USD. INR depreciation during conflicts compounds the price shock. RBI forward contracts and currency swap agreements with GCC nations would reduce this dual exposure.
+## 📊 Power BI Dashboard
 
-4. **Diversified Import Sources**
-   India has already diversified (Russia, UAE, Saudi Arabia, USA). Further diversification to West African and Latin American suppliers insulates against single-region conflict risk.
+The Power BI dashboard includes **3 interactive pages**:
 
-5. **Inflation Targeting Consistency**
-   RBI's 4% ± 2% inflation band has improved anchoring. Pre-emptive rate signals during oil shock years proved effective in 2022 vs. uncontrolled inflation of 1991.
+* **Trend Analysis**
+  Oil price vs inflation (dual-axis visualization)
+
+* **Shock Analysis**
+  Oil price shocks and geopolitical events
+
+* **Risk Heatmap**
+  Decade-wise inflation and volatility patterns
+
+---
+
+## 📌 Key Insights
+
+* Oil price volatility is often associated with major geopolitical events
+* India's inflation response to oil shocks has reduced over time
+* Economic reforms and policy measures have improved resilience
+* High-risk years cluster around major global conflicts
+
+---
+
+## ⚠️ Limitations
+
+* This analysis shows **association, not causation**
+* Inflation is influenced by multiple factors beyond oil prices
+* Annual aggregation may hide short-term fluctuations
+* Risk classification is rule-based, not predictive
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Tool | Purpose |
-|---|---|
-| Python 3 (pandas, numpy) | Data cleaning, ETL, feature engineering |
-| SQL (SQLite/PostgreSQL) | Analytical queries, aggregations |
-| Power BI Desktop | Interactive dashboard, DAX measures |
-| GitHub | Version control, portfolio showcase |
+| Tool                    | Purpose             |
+| ----------------------- | ------------------- |
+| Python (pandas, numpy)  | Data cleaning & ETL |
+| SQL (SQLite/PostgreSQL) | Data analysis       |
+| Power BI                | Visualization       |
+| Excel                   | Data inspection     |
+
+---
+
+## 🚀 How to Run
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/<your-username>/india-geopolitics-economy.git
+cd india-geopolitics-economy
+```
+
+### 2. Install Dependencies
+
+```bash
+pip install pandas numpy
+```
+
+### 3. Run ETL
+
+```bash
+python data_cleaning.py
+```
+
+### 4. Run SQL
+
+Import CSV as `india_geo` and execute queries.
+
+### 5. Open Dashboard
+
+Open `.pbix` file in Power BI Desktop.
 
 ---
 
 ## 👤 Author
 
 **Sreeharsh**
-B.Tech Computer Science & Engineering (2nd Year)
-Vimal Jyothi engineering college, KTU
-
-- 📜 Google Data Analytics Professional Certificate
-- 📊 Microsoft PL-300 Power BI Certified
-- 🏛️ IEDC Core Member | IEEE Student Member
+B.Tech Computer Engineering
 
 ---
 
 ## 📄 License
 
-This project is for educational and portfolio purposes. Data sourced from World Bank Open Data and U.S. EIA — both under open data policies.
+This project is for academic and educational purposes.
+Data sourced from World Bank and U.S. EIA open data platforms.
