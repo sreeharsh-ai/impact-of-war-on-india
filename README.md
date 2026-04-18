@@ -174,7 +174,7 @@ Open `.pbix` file in Power BI Desktop.
 ## 👤 Author
 
 **Sreeharsh**
-B.Tech Computer Engineering
+B.Tech Computer Science Engineering
 
 ---
 
